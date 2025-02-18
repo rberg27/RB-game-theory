@@ -1,15 +1,4 @@
-import requests
-import json
-from datetime import datetime
-from bs4 import BeautifulSoup as soup
-
-urls = ['https://www.profootballhof.com/news/2005/01/news-playoff-results-1960s/',
-        'https://www.profootballhof.com/news/2005/01/news-playoff-results-1970s/',
-        'https://www.profootballhof.com/news/2005/01/news-playoff-results-1980s/',
-        'https://www.profootballhof.com/news/2005/01/news-playoff-results-1990s/',
-        'https://www.profootballhof.com/news/2005/01/news-playoff-results-2000s/',
-        'https://www.profootballhof.com/news/2005/01/news-playoff-results-2010s/'
-    ]
+from typing import List
 
 teams = ["arizona",
         "atlanta",
@@ -52,40 +41,40 @@ teams = ["arizona",
         "washington commanders",
         "washington redskins"
         ]
-
-class Playoffs():
-    def __init__(self, year):
+SUPERBOWL_WIN = 5
+CONFERENCE_WIN = 4
+DIVISION_WIN = 3
+WILDCARD_WIN = 2
+FIRSTROUND_LOSS = 1
+WIN = .2
+class Season():
+    def __init__(self, year: int, superbowl_winner: str, conference_champions: List[str],  firstround_losers: List[str], division_winners: List[str] = None, wildcard_winners: List[str] = None):
         self.year = year
-        self.url = urls[5]
-        if (year < 1970):
-            self.url = urls[0]
-        elif (year < 1980):
-            self.url = urls[1]
-        elif (year < 1990):
-            self.url = urls[2]
-        elif (year < 2000):
-            self.url = urls[3]
-        elif (year < 2010):
-            self.url = urls[4]
-        self.superbowl_winner, self.conference_champions, self.division_winners, self.wildcard_winners, self.firstround_losers = None, None, None, None 
+        self.superbowl_winner = superbowl_winner
+        self.conference_champions = conference_champions
+        self.division_winners = division_winners
+        self.wildcard_winners = wildcard_winners
+        self.firstround_losers = firstround_losers
+        self.records = {team:0 for team in teams}
 
-    def set_1966(self):
-        self.superbowl_winner = 'green bay'
-        self.conference_champions = ['green bay', 'kansas city']
-        self.firstround_losers = ['dallas', 'buffalo']
-
+    def set_record(self, team, wins):
+        self.records[team] = wins
+            
     def get_points(self):
         scores = {team:0 for team in teams}
         for team in teams:
+            scores[team] = records[team] * WIN
             if (team == self.superbowl_winner):
-                scores[team] += 5
+                scores[team] += SUPERBOWL_WIN
             if (team in self.conference_champions):
-                scores[team] += 4
+                scores[team] += CONFERENCE_WIN
             if (team in self.division_winners):
-                scores[team] += 3
+                scores[team] += DIVISION_WIN
             if (team in self.wildcard_winners):
-                scores[team] += 2
+                scores[team] += WILDCARD_WIN
             if (team in self.firstround_losers):
-                scores[team] += 1
+                scores[team] += FIRSTROUND_LOSS
         return scores
+
+
 
