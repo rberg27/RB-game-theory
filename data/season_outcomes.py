@@ -1,45 +1,44 @@
 from typing import List
 
-teams = ["arizona",
-        "atlanta",
-        "baltimore",
-        "boston",
-        "buffalo",
-        "carolina",
-        "chicago",
-        "cincinnati",
-        "cleveland",
-        "dallas",
-        "denver",
-        "detroit",
-        "green bay",
-        "houston oilers",
-        "houston texans",
-        "indianapolis",
-        "jacksonville",
-        "kansas city",
-        "las vegas",
-        "la chargers",
-        "la rams",
-        "miami",
-        "minnesota",
-        "new england",
-        "new orleans",
-        "new york giants",
-        "new york jets",
-        "oakland",
-        "philadelphia",
-        "phoenix",
-        "pittsburgh",
-        "san diego",
-        "san francisco",
-        "seattle",
-        "st. louis cardinals",
-        "st. Louis rams",
-        "tampa bay",
-        "tennessee",
-        "washington commanders",
-        "washington redskins"
+teams = ["ari",
+        "atl",
+        "bal",
+        "bos",
+        "buf",
+        "car",
+        "chi",
+        "cin",
+        "cle",
+        "dal",
+        "den",
+        "det",
+        "gb",
+        "hou oil",
+        "hou tex",
+        "ind",
+        "jac",
+        "kc",
+        "lv",
+        "la cha",
+        "la ram",
+        "mia",
+        "min",
+        "ne",
+        "no",
+        "ny gia",
+        "ny jet",
+        "oak",
+        "phi",
+        "pho",
+        "pit",
+        "sd",
+        "sf",
+        "sea",
+        "sl car",
+        "sl ram",
+        "tb",
+        "ten",
+        "was"
         ]
 SUPERBOWL_WIN = 5
 CONFERENCE_WIN = 4
@@ -57,7 +56,7 @@ class Season():
         self.firstround_losers = firstround_losers
         self.records = {team:0 for team in teams}
 
-    def set_record(self, team, wins):
+    def set_record(self, team: str, wins: int):
         self.records[team] = wins
             
     def get_points(self):
@@ -77,4 +76,25 @@ class Season():
         return scores
 
 
+def main():
+    #1966 season
+    season_1966 = Season(1966, 'gb', ['kc', 'gb'], ['dal', 'buf'])
+    season_1966.set_record('dal', 10)
+    season_1966.set_record('phi', 9)
+    season_1966.set_record('was', 7)
+    season_1966.set_record('pit',5)
+    season_1966.set_record('ny gia', 1)
+    season_1966.set_record('sl car', 8)
+    season_1966.set_record('cle', 7)
+    season_1966.set_record('atl', 3)
+    season_1966.set_record('gb', 12)
+    season_1966.set_record('bal', 9)
+    season_1966.set_record('chi', 5)
+    season_1966.set_record('det', 4)
+    season_1966.set_record('la ram', 8)
+    season_1966.set_record('sf', 6)
+    season_1966.set_record('min', 4)
+
+if __name__ == "__main__":
+    main()
 
