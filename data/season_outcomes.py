@@ -43,6 +43,60 @@ abv = { "Arizona Cardinals": "car",
         "Washington Football Team": 'foo',
         "Washington Commanders": 'com'
         ]
+
+nfl_teams_2022_2024 = [
+    "Arizona Cardinals", "Atlanta Falcons", "Baltimore Ravens", "Buffalo Bills",
+    "Carolina Panthers", "Chicago Bears", "Cincinnati Bengals", "Cleveland Browns",
+    "Dallas Cowboys", "Denver Broncos", "Detroit Lions", "Green Bay Packers",
+    "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Kansas City Chiefs",
+    "Las Vegas Raiders", "Los Angeles Chargers", "Los Angeles Rams", "Miami Dolphins",
+    "Minnesota Vikings", "New England Patriots", "New Orleans Saints", "New York Giants",
+    "New York Jets", "Philadelphia Eagles", "Pittsburgh Steelers", "San Francisco 49ers",
+    "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Commanders"
+]
+nfl_teams_2020_2021 = [
+    "Arizona Cardinals", "Atlanta Falcons", "Baltimore Ravens", "Buffalo Bills",
+    "Carolina Panthers", "Chicago Bears", "Cincinnati Bengals", "Cleveland Browns",
+    "Dallas Cowboys", "Denver Broncos", "Detroit Lions", "Green Bay Packers",
+    "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Kansas City Chiefs",
+    "Las Vegas Raiders", "Los Angeles Chargers", "Los Angeles Rams", "Miami Dolphins",
+    "Minnesota Vikings", "New England Patriots", "New Orleans Saints", "New York Giants",
+    "New York Jets", "Philadelphia Eagles", "Pittsburgh Steelers", "San Francisco 49ers",
+    "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Football Team"
+]
+
+nfl_teams_2018_2019 = [
+    "Buffalo Bills", "Miami Dolphins", "New England Patriots", "New York Jets",  # AFC East
+    "Baltimore Ravens", "Cincinnati Bengals", "Cleveland Browns", "Pittsburgh Steelers",  # AFC North
+    "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans",  # AFC South
+    "Denver Broncos", "Kansas City Chiefs", "Oakland Raiders", "San Diego Chargers",  # AFC West
+    "Dallas Cowboys", "New York Giants", "Philadelphia Eagles", "Washington Redskins",  # NFC East
+    "Chicago Bears", "Detroit Lions", "Green Bay Packers", "Minnesota Vikings",  # NFC North
+    "Atlanta Falcons", "Carolina Panthers", "New Orleans Saints", "Tampa Bay Buccaneers",  # NFC South
+    "Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"  # NFC West
+]
+
+nfl_teams_2017 = [
+    "Buffalo Bills", "Miami Dolphins", "New England Patriots", "New York Jets",  # AFC East
+    "Baltimore Ravens", "Cincinnati Bengals", "Cleveland Browns", "Pittsburgh Steelers",  # AFC North
+    "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans",  # AFC South
+    "Denver Broncos", "Kansas City Chiefs", "Oakland Raiders", "San Diego Chargers",  # AFC West
+    "Dallas Cowboys", "New York Giants", "Philadelphia Eagles", "Washington Redskins",  # NFC East
+    "Chicago Bears", "Detroit Lions", "Green Bay Packers", "Minnesota Vikings",  # NFC North
+    "Atlanta Falcons", "Carolina Panthers", "New Orleans Saints", "Tampa Bay Buccaneers",  # NFC South
+    "Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"  # NFC West
+]
+
+nfl_teams_1966 = [
+    "Atlanta Falcons", "Baltimore Colts", "Chicago Bears", "Cleveland Browns",
+    "Dallas Cowboys", "Detroit Lions", "Green Bay Packers", "Los Angeles Rams",
+    "Minnesota Vikings", "New York Giants", "Philadelphia Eagles", "Pittsburgh Steelers",
+    "St. Louis Cardinals", "San Francisco 49ers", "Washington Redskins",
+    "Boston Patriots", "Buffalo Bills", "Denver Broncos", "Houston Oilers",
+    "Kansas City Chiefs", "Miami Dolphins", "New York Jets", "Oakland Raiders",
+    "San Diego Chargers"
+]
+
 SUPERBOWL_WIN = 5
 CONFERENCE_WIN = 4
 DIVISION_WIN = 3
@@ -90,220 +144,221 @@ class Season():
 
 def main():
     #2024 season
-    season_2024 = Season(2024, 'eag', ['eag', 'kc'], ['pit', 'den', 'la cha', 'tb', 'min', 'gb'], division_winners=['phi','buf', 'kc', 'was'], wildcard_winners=['hou', 'bal', 'buf', 'phi', 'was', 'la ram', 'kc', 'det'])
-    season_2024.set_record('phi', 14)
-    season_2024.set_record('was', 12)
-    season_2024.set_record('dal', 7)
-    season_2024.set_record('ny gia', 3)
-    season_2024.set_record('tb', 10)
-    season_2024.set_record('atl', 8)
-    season_2024.set_record('car', 5)
-    season_2024.set_record('no', 5)
-    season_2024.set_record('la ram', 10)
+    season_2024 = Season(2024, nfl_teams_2022_2024, 'eag', ['eag', 'chi'], ['ste', 'bronc', 'cha', 'buc', 'vik', 'pac'], division_winners=['eag','bil', 'chi', 'com'], wildcard_winners=['tex', 'rav', 'bil', 'eag', 'com', 'ram', 'chi', 'lio'])
+    season_2024.set_record('eag', 14)
+    season_2024.set_record('com', 12)
+    season_2024.set_record('cow', 7)
+    season_2024.set_record('gia', 3)
+    season_2024.set_record('buc', 10)
+    season_2024.set_record('fal', 8)
+    season_2024.set_record('pan', 5)
+    season_2024.set_record('sai', 5)
+    season_2024.set_record('ram', 10)
     season_2024.set_record('sea', 10)
-    season_2024.set_record('ari', 8)
-    season_2024.set_record('sf', 6)
-    season_2024.set_record('det', 15)
-    season_2024.set_record('min', 14)
-    season_2024.set_record('gb', 11)
-    season_2024.set_record('chi', 5)
-    season_2024.set_record('kc', 15)
-    season_2024.set_record('la cha', 11)
-    season_2024.set_record('den', 10)
-    season_2024.set_record('lv', 4)
-    season_2024.set_record('buf', 13)
-    season_2024.set_record('mia', 8)
-    season_2024.set_record('ny jet', 5)
-    season_2024.set_record('ne', 4)
-    season_2024.set_record('hou', 10)
-    season_2024.set_record('ind', 8)
-    season_2024.set_record('jac', 4)
-    season_2024.set_record('ten', 3)
-    season_2024.set_record('bal', 12)
-    season_2024.set_record('cin', 9)
-    season_2024.set_record('cle', 3)
-    season_2024.set_record('pit', 10)
+    season_2024.set_record('car', 8)
+    season_2024.set_record('49', 6)
+    season_2024.set_record('lio', 15)
+    season_2024.set_record('vik', 14)
+    season_2024.set_record('pac', 11)
+    season_2024.set_record('bea', 5)
+    season_2024.set_record('chi', 15)
+    season_2024.set_record('cha', 11)
+    season_2024.set_record('bronc', 10)
+    season_2024.set_record('rai', 4)
+    season_2024.set_record('bil', 13)
+    season_2024.set_record('dol', 8)
+    season_2024.set_record('jet', 5)
+    season_2024.set_record('pat', 4)
+    season_2024.set_record('tex', 10)
+    season_2024.set_record('col', 8)
+    season_2024.set_record('jag', 4)
+    season_2024.set_record('tit', 3)
+    season_2024.set_record('rav', 12)
+    season_2024.set_record('ben', 9)
+    season_2024.set_record('brown', 3)
+    season_2024.set_record('ste', 10)
     season_2024.set_points()
     season_2024.verify_ian_didnt_typo()
 
     #2023 season
-    season_2023 = Season(2023, 'kc', ['kc', 'sf'], ['cle', 'mia', 'pit', 'phi', 'la ram', 'gb'], division_winners=['kc', 'sf', 'bal', 'det'], wildcard_winners=['hou', 'kc', 'buf', 'tb', 'det', 'dal', 'bal', 'sf'])
-    season_2023.set_record('phi', 11)
-    season_2023.set_record('was', 4)
-    season_2023.set_record('dal', 12)
-    season_2023.set_record('ny gia', 6)
-    season_2023.set_record('tb', 9)
-    season_2023.set_record('atl', 7)
-    season_2023.set_record('car', 2)
-    season_2023.set_record('no', 9)
-    season_2023.set_record('la ram', 10)
+    season_2023 = Season(2023, nfl_teams_2022_2024, 'chi', ['chi', '49'], ['brown', 'dol', 'ste', 'eag', 'ram', 'pac'], division_winners=['chi', '49', 'rav', 'lio'], wildcard_winners=['tex', 'chi', 'bil', 'buc', 'lio', 'cow', 'rav', '49'])
+    season_2023.set_record('eag', 11)
+    season_2023.set_record('com', 4)
+    season_2023.set_record('cow', 12)
+    season_2023.set_record('gia', 6)
+    season_2023.set_record('buc', 9)
+    season_2023.set_record('fal', 7)
+    season_2023.set_record('pan', 2)
+    season_2023.set_record('sai', 9)
+    season_2023.set_record('ram', 10)
     season_2023.set_record('sea', 9)
-    season_2023.set_record('ari', 4)
-    season_2023.set_record('sf', 12)
-    season_2023.set_record('det', 12)
-    season_2023.set_record('min', 7)
-    season_2023.set_record('gb', 9)
-    season_2023.set_record('chi', 7)
-    season_2023.set_record('kc', 11)
-    season_2023.set_record('la cha', 5)
-    season_2023.set_record('den', 8)
-    season_2023.set_record('lv', 8)
-    season_2023.set_record('buf', 11)
-    season_2023.set_record('mia', 11)
-    season_2023.set_record('ny jet', 7)
-    season_2023.set_record('ne', 4)
-    season_2023.set_record('hou', 10)
-    season_2023.set_record('ind', 9)
-    season_2023.set_record('jac', 9)
-    season_2023.set_record('ten', 6)
-    season_2023.set_record('bal', 13)
-    season_2023.set_record('pit', 10)
-    season_2023.set_record('cin', 9)
-    season_2023.set_record('cle', 11)
+    season_2023.set_record('car', 4)
+    season_2023.set_record('49', 12)
+    season_2023.set_record('lion', 12)
+    season_2023.set_record('vik', 7)
+    season_2023.set_record('pac', 9)
+    season_2023.set_record('bea', 7)
+    season_2023.set_record('chi', 11)
+    season_2023.set_record('cha', 5)
+    season_2023.set_record('bronc', 8)
+    season_2023.set_record('rai', 8)
+    season_2023.set_record('bil', 11)
+    season_2023.set_record('dol', 11)
+    season_2023.set_record('jet', 7)
+    season_2023.set_record('pat', 4)
+    season_2023.set_record('tex', 10)
+    season_2023.set_record('col', 9)
+    season_2023.set_record('jag', 9)
+    season_2023.set_record('tit', 6)
+    season_2023.set_record('rav', 13)
+    season_2023.set_record('ste', 10)
+    season_2023.set_record('ben', 9)
+    season_2023.set_record('brown', 11)
     season_2023.set_points()
     season_2023.verify_ian_didnt_typo()
 
-    season_2022 = Season(2022, 'kc', ['kc', 'phi'], ['bal', 'mia', 'la cha', 'tb', 'sea', 'min'], division_winners=['phi', 'sf', 'kc', 'cin'], wildcard_winners=['cin', 'buf', 'jac', 'kc', 'dal', 'sf', 'ny gia', 'phi'])
-    season_2022.set_record('kc', 14)
-    season_2022.set_record('phi', 14)
-    season_2022.set_record('buf',13)
-    season_2022.set_record('min', 13)
-    season_2022.set_record('sf', 13)
-    season_2022.set_record('cin', 12)
-    season_2022.set_record('dal', 12)
-    season_2022.set_record('bal', 10)
-    season_2022.set_record('la cha', 10)
-    season_2022.set_record('ny gia', 9)
-    season_2022.set_record('det', 9)
-    season_2022.set_record('jac', 9) #DOUGGIE PEDERSON
-    season_2022.set_record('mia', 9)
-    season_2022.set_record('pit', 9)
+    season_2022 = Season(2022, nfl_teams_2022_2024, 'chi', ['chi', 'eag'], ['rav', 'dol', 'cha', 'buc', 'sea', 'vik'], division_winners=['eag', '49', 'chi', 'ben'], wildcard_winners=['ben', 'bil', 'jag', 'chi', 'cow', '49', 'gia', 'eag'])
+    season_2022.set_record('chi', 14)
+    season_2022.set_record('eag', 14)
+    season_2022.set_record('bil',13)
+    season_2022.set_record('vik', 13)
+    season_2022.set_record('49', 13)
+    season_2022.set_record('ben', 12)
+    season_2022.set_record('cow', 12)
+    season_2022.set_record('rav', 10)
+    season_2022.set_record('cha', 10)
+    season_2022.set_record('gia', 9)
+    season_2022.set_record('lio', 9)
+    season_2022.set_record('jag', 9) #DOUGGIE PEDERSON
+    season_2022.set_record('dol', 9)
+    season_2022.set_record('ste', 9)
     season_2022.set_record('sea', 9)
-    season_2022.set_record('was', 8)
-    season_2022.set_record('gb', 8)
-    season_2022.set_record('ne', 8)
-    season_2022.set_record('tb', 8)
-    season_2022.set_record('atl', 7)
-    season_2022.set_record('car', 7) #CMC dominance? this will be weird cuz he was the best rb but mid record
-    season_2022.set_record('cle', 7) #same with chubb
-    season_2022.set_record('no', 7) #same with kamara
-    season_2022.set_record('ny jet', 7)
-    season_2022.set_record('ten', 7) #same with henry
-    season_2022.set_record('lv', 6) #same with josh jacobs?
-    season_2022.set_record('den', 5) #not the same with pookie (jabunzo williams)
-    season_2022.set_record('la ram', 5)
-    season_2022.set_record('ind', 4)
-    season_2022.set_record('ari', 4)
-    season_2022.set_record('hou', 3)
-    season_2022.set_record('chi', 3)  
+    season_2022.set_record('com', 8)
+    season_2022.set_record('pac', 8)
+    season_2022.set_record('pat', 8)
+    season_2022.set_record('buc', 8)
+    season_2022.set_record('fal', 7)
+    season_2022.set_record('pan', 7) #CMC dominance? this will be weird cuz he was the best rb but mid record
+    season_2022.set_record('brown', 7) #same with chubb
+    season_2022.set_record('sai', 7) #same with kamara
+    season_2022.set_record('jet', 7)
+    season_2022.set_record('tit', 7) #same with henry
+    season_2022.set_record('rai', 6) #same with josh jacobs?
+    season_2022.set_record('bronc', 5) #not the same with pookie (jabunzo williams)
+    season_2022.set_record('ram', 5)
+    season_2022.set_record('col', 4)
+    season_2022.set_record('car', 4)
+    season_2022.set_record('tex', 3)
+    season_2022.set_record('bea', 3)  
     season_2022.set_points()
     season_2022.verify_ian_didnt_typo()
 
     #2021 season
-    season_2021 = Season(2021, 'la ram', ['la ram', 'cin'], ['dal', 'ari', 'phi', 'lv', 'ne', 'pit'], divisional_winners=['la', 'sf', 'cin', 'kc'], wildcard_winners=['sf', 'gb', 'la ram', 'tb', 'cin', 'ten', 'buf', 'kc'])
-    season_2021.set_record('gb', 13)
-    season_2021.set_record('tb', 13)
-    season_2021.set_record('dal', 12) #first round exit
-    season_2021.set_record('kc', 12)
-    season_2021.set_record('la ram', 12)
-    season_2021.set_record('ten', 12)
-    season_2021.set_record('ari', 11)
-    season_2021.set_record('buf', 11)
-    season_2021.set_record('cin', 10)
-    season_2021.set_record('lv', 10)
-    season_2021.set_record('ne', 10)
-    season_2021.set_record('sf', 10)
-    season_2021.set_record('pit', 9)
-    season_2021.set_record('ind', 9)
-    season_2021.set_record('la cha', 9)
-    season_2021.set_record('mia', 9)
-    season_2021.set_record('no', 9)
-    season_2021.set_record('phi', 9)
-    season_2021.set_record('bal', 8)
-    season_2021.set_record('cle', 8)
-    season_2021.set_record('min', 8)
-    season_2021.set_record('atl', 7)
-    season_2021.set_record('den', 7)
+    season_2021 = Season(2021, nfl_teams_2020_2021, 'ram', ['ram', 'ben'], ['cow', 'car', 'eag', 'rai', 'pat', 'ste'], divisional_winners=['ram', '49', 'ben', 'chi'], wildcard_winners=['49', 'pac', 'ram', 'buc', 'ben', 'tit', 'bil', 'chi'])
+    season_2021.set_record('pac', 13)
+    season_2021.set_record('buc', 13)
+    season_2021.set_record('cow', 12) #first round exit
+    season_2021.set_record('chi', 12)
+    season_2021.set_record('ram', 12)
+    season_2021.set_record('tit', 12)
+    season_2021.set_record('car', 11)
+    season_2021.set_record('bil', 11)
+    season_2021.set_record('ben', 10)
+    season_2021.set_record('rai', 10)
+    season_2021.set_record('pat', 10)
+    season_2021.set_record('49', 10)
+    season_2021.set_record('ste', 9)
+    season_2021.set_record('col', 9)
+    season_2021.set_record('cha', 9)
+    season_2021.set_record('dol', 9)
+    season_2021.set_record('sai', 9)
+    season_2021.set_record('eag', 9)
+    season_2021.set_record('rav', 8)
+    season_2021.set_record('brown', 8)
+    season_2021.set_record('vik', 8)
+    season_2021.set_record('fal', 7)
+    season_2021.set_record('bronc', 7)
     season_2021.set_record('sea', 7)
-    season_2021.set_record('was', 7) #football team
-    season_2021.set_record('chi', 6)
-    season_2021.set_record('car', 5)
-    season_2021.set_record('hou', 4)
-    season_2021.set_record('ny gia', 4)
-    season_2021.set_record('ny jet', 4)
-    season_2021.set_record('det', 3)
-    season_2021.set_record('jac', 3)
+    season_2021.set_record('foo', 7) #football team
+    season_2021.set_record('bea', 6)
+    season_2021.set_record('pan', 5)
+    season_2021.set_record('tex', 4)
+    season_2021.set_record('gia', 4)
+    season_2021.set_record('jet', 4)
+    season_2021.set_record('lio', 3)
+    season_2021.set_record('jag', 3)
     season_2021.set_points()
     season_2021.verify_ian_didnt_typo()
 
     #2020 season
-    season_2020 = Season(2020, 'tb', ['kc', 'tb'], ['ten', 'ind', 'pit', 'was', 'chi', 'sea'], divisional_winners=['kc', 'buf', 'tb', 'gb'], wildcard_winners=['bal', 'buf', 'cle', 'kc', 'tb', 'no', 'la ram', 'gb'])
-    season_2020.set_record('kc', 14)
-    season_2020.set_record('buf',13)
-    season_2020.set_record('gb', 13)
-    season_2020.set_record('no', 12)
-    season_2020.set_record('pit', 12)
+    season_2020 = Season(2020, nfl_teams_2020_2021, 'buc', ['chi', 'buc'], ['tit', 'col', 'ste', 'foo', 'bea', 'sea'], divisional_winners=['chi', 'bil', 'buc', 'pac'], wildcard_winners=['rav', 'bil', 'brown', 'chi', 'buc', 'sai', 'ram', 'pac'])
+    season_2020.set_record('chi', 14)
+    season_2020.set_record('bil',13)
+    season_2020.set_record('pac', 13)
+    season_2020.set_record('sai', 12)
+    season_2020.set_record('ste', 12)
     season_2020.set_record('sea', 12)
-    season_2020.set_record('bal', 11)
-    season_2020.set_record('cle', 11)
-    season_2020.set_record('ind', 11)
-    season_2020.set_record('tb', 11)
-    season_2020.set_record('ten', 11)
-    season_2020.set_record('la ram', 10)
-    season_2020.set_record('mia', 10)
-    season_2020.set_record('ari', 8)
-    season_2020.set_record('chi', 8)
-    season_2020.set_record('lv', 8)
-    season_2020.set_record('la cha', 7)
-    season_2020.set_record('min', 7)
-    season_2020.set_record('ne', 7)
-    season_2020.set_record('was', 7)
-    season_2020.set_record('dal', 6)
-    season_2020.set_record('ny gia', 6)
-    seaons_2020.set_record('sf', 60)
-    season_2020.set_record('car', 5)
-    season_2020.set_record('den', 5)
-    season_2020.set_record('det', 5)
-    season_2020.set_record('cin', 4)
-    season_2020.set_record('phi', 4)
-    season_2020.set_record('atl', 4)
-    season_2020.set_record('hou', 4)
-    season_2020.set_record('ny jet', 2) #lmaoooo lost draft pick dumbass Adam Gase
-    season_2020.set_record('jac', 1)
+    season_2020.set_record('rav', 11)
+    season_2020.set_record('brown', 11)
+    season_2020.set_record('col', 11)
+    season_2020.set_record('buc', 11)
+    season_2020.set_record('tit', 11)
+    season_2020.set_record('ram', 10)
+    season_2020.set_record('dol', 10)
+    season_2020.set_record('car', 8)
+    season_2020.set_record('bea', 8)
+    season_2020.set_record('rai', 8)
+    season_2020.set_record('cha', 7)
+    season_2020.set_record('vik', 7)
+    season_2020.set_record('pat', 7)
+    season_2020.set_record('foo', 7)
+    season_2020.set_record('cow', 6)
+    season_2020.set_record('gia', 6)
+    seaons_2020.set_record('49', 60)
+    season_2020.set_record('pan', 5)
+    season_2020.set_record('bronc', 5)
+    season_2020.set_record('lio', 5)
+    season_2020.set_record('ben', 4)
+    season_2020.set_record('eag', 4)
+    season_2020.set_record('fal', 4)
+    season_2020.set_record('tex', 4)
+    season_2020.set_record('jet', 2) #lmaoooo lost draft pick dumbass Adam Gase
+    season_2020.set_record('jag', 1)
     season_2020.set_points()
     season_2020.verify_ian_didnt_typo()
 
-    #2019 season -> Oakland Raiders
-    season_2019 = Season(2019, 'kc', ['kc', 'sf'], ['phi', 'no', 'ne', 'buf'], divisional_winners=['kc','tn','gb','sf'], wildcard_winners=['sea', 'gb', 'min', 'sf', 'ten', 'bal', 'hou', 'kc'])
-    season_2019.set_record('bal'
+    #2019 season
+    season_2019 = Season(2019, nfl_teams_2018_2019, 'chi', ['chi', '49'], ['eag', 'sai', 'pat', 'bil'], divisional_winners=['chi','tit','pac','49'], wildcard_winners=['sea', 'pac', 'vik', '49', 'tit', 'rav', 'tex', 'chi'])
+    season_2019.set_record('rav', 14)
     season_2019.set_points()
     season_2019.verify_ian_didnt_typo()
     
     #1966 season
-    season_1966 = Season(1966, 'gb', ['kc', 'gb'], ['dal', 'buf'])
-    season_1966.set_record('dal', 10)
-    season_1966.set_record('phi', 9)
-    season_1966.set_record('was', 7)
-    season_1966.set_record('pit',5)
-    season_1966.set_record('ny gia', 1)
-    season_1966.set_record('sl car', 8)
-    season_1966.set_record('cle', 7)
-    season_1966.set_record('atl', 3)
-    season_1966.set_record('gb', 12)
-    season_1966.set_record('bal', 9)
-    season_1966.set_record('chi', 5)
-    season_1966.set_record('det', 4)
-    season_1966.set_record('la ram', 8)
-    season_1966.set_record('sf', 6)
-    season_1966.set_record('min', 4)
-    season_1966.set_record('buf', 9)
-    season_1966.set_record('bos', 8)
-    season_1966.set_record('ny jet', 6)
-    season_1966.set_record('hou', 3)
-    season_1966.set_record('kc', 11)
-    season_1966.set_record('sd', 7)
-    season_1966.set_record('oak', 8)
-    season_1966.set_record('den', 4)
+    season_1966 = Season(1966, nfl_teams_1966, 'pac', ['chi', 'pac'], ['cow', 'bil'])
+    season_1966.set_record('pac', 12)
+    season_1966.set_record('chi', 11)
+    season_1966.set_record('cow', 10)
+    season_1966.set_record('bil', 9)
+    season_1966.set_record('brown', 9)
+    season_1966.set_record('col', 9)
+    season_1966.set_record('eag', 9)
+    season_1966.set_record('car', 8)
+    season_1966.set_record('rai', 8)
+    season_1966.set_record('ram', 8)
+    season_1966.set_record('pat', 8)
+    season_1966.set_record('cha', 7)
+    season_1966.set_record('red', 7)
+    season_1966.set_record('jet', 6)
+    season_1966.set_record('49', 6)
+    season_1966.set_record('bea', 5)
+    season_1966.set_record('ste',5)
+    season_1966.set_record('bronc', 4)
+    season_1966.set_record('lio', 4)
+    season_1966.set_record('vik', 4)
+    season_1966.set_record('fal', 3)
+    season_1966.set_record('dol', 3)
+    season_1966.set_record('oil', 3)
+    season_1966.set_record('gia', 1)
     season_1966.set_points()
     season_1966.verify_ian_didnt_typo()
 
