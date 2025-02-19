@@ -53,27 +53,34 @@ class Season():
         self.division_winners = division_winners
         self.wildcard_winners = wildcard_winners
         self.firstround_losers = firstround_losers
-        self.records = {team:0 for team in teams}
+        self.scores = {team:0 for team in teams}
 
     def set_record(self, team: str, wins: int):
-        self.records[team] = wins
+        self.scores[team] = wins
             
-    def get_points(self):
-        scores = {team:0 for team in teams}
+    def set_points(self):
         for team in teams:
-            scores[team] = round(self.records[team] * WIN, 1)
+            self.scores[team] = round(self.scores[team] * WIN, 1)
             if (team == self.superbowl_winner):
-                scores[team] += SUPERBOWL_WIN
+                self.scores[team] += SUPERBOWL_WIN
             if (team in self.conference_champions):
-                scores[team] += CONFERENCE_WIN
+                self.scores[team] += CONFERENCE_WIN
             if (team in self.division_winners):
-                scores[team] += DIVISION_WIN
+                self.scores[team] += DIVISION_WIN
             if (team in self.wildcard_winners):
-                scores[team] += WILDCARD_WIN
+                self.scores[team] += WILDCARD_WIN
             if (team in self.firstround_losers):
-                scores[team] += FIRSTROUND_LOSS
-        return scores
-
+                self.scores[team] += FIRSTROUND_LOSS
+                
+    def get_points(self):
+        return self.scores
+    
+    def verify_ian_didnt_typo(self):
+        for team, value in self.scores.items():
+            if (team not in teams):
+                print(f'{team} not a valid team dipshit')
+            if (value == 0):
+                print(f'{team} has 0 points') 
 
 def main():
     #2024 season
@@ -109,8 +116,8 @@ def main():
     season_2024.set_record('bal', 12)
     season_2024.set_record('cin', 9)
     season_2024.set_record('cle', 3)
-    scores_2024 = season_2024.get_points()
-    print(scores_2024)
+    season_2024.set_points()
+    season_2024.verify_ian_didnt_typo()
 
     #2023 season
     season_2023 = Season(2023, 'kc', ['kc', 'sf'], ['cle', 'mia', 'pit', 'phi', 'la ram', 'gb'], division_winners=['kc', 'sf', 'bal', 'det'], wildcard_winners=['hou', 'kc', 'buf', 'tb', 'det', 'dal', 'bal', 'sf'])
@@ -146,13 +153,50 @@ def main():
     season_2023.set_record('pit', 10)
     season_2023.set_record('cin', 9)
     season_2023.set_record('cle', 11)
-    scores_2023 = season_2023.get_points()
-    print(scores_2023)
+    season_2023.set_points()
+    season_2023.verify_ian_didnt_typo()
 
     season_2022 = Season(2022, 'kc', ['kc', 'phi'], ['bal', 'mia', 'la cha', 'tb', 'sea', 'min'], division_winners=['phi', 'sf', 'kc', 'cin'], wildcard_winners=['cin', 'buf', 'jac', 'kc', 'dal', 'sf', 'ny gia', 'phi'])
     season_2022.set_record('kc', 14)
-    scores_2022 = season_2022.get_points()
-    print(scores_2022)
+    season_2022.set_record('phi', 14)
+    season_2022.set_record('buf',13)
+    season_2022.set_record('min', 13)
+    season_2022.set_record('sf', 13)
+    season_2022.set_record('cin', 12)
+    season_2022.set_record('dal', 12)
+    season_2022.set_record('bal', 10)
+    season_2022.set_record('la cha', 10)
+    season_2022.set_record('ny gia', 9)
+    season_2022.set_record('det', 9)
+    season_2022.set_record('jac', 9) #DOUGGIE PEDERSON
+    season_2022.set_record('mia', 9)
+    season_2022.set_record('pit', 9)
+    season_2022.set_record('sea', 9)
+    season_2022.set_record('was', 8)
+    season_2022.set_record('gb', 8)
+    season_2022.set_record('ne', 8)
+    season_2022.set_record('tb', 8)
+    season_2022.set_record('atl', 7)
+    season_2022.set_record('car', 7) #CMC dominance? this will be weird cuz he was the best rb but mid record
+    season_2022.set_record('cle', 7) #same with chubb
+    season_2022.set_record('no', 7) #same with kamara
+    season_2022.set_record('ny jet', 7)
+    season_2022.set_record('ten', 7) #same with henry
+    season_2022.set_record('lv', 6) #same with josh jacobs?
+    season_2022.set_record('den', 5) #not the same with pookie (jabunzo williams)
+    season_2022.set_record('la ram', 5)
+    season_2022.set_record('ind', 4)
+    season_2022.set_record('ari', 4)
+    season_2022.set_record('hou', 3)
+    season_2022.set_record('chi', 3)  
+    season_2022.set_points()
+    season_2022.verify_ian_didnt_typo()
+
+    #2021 season
+    season_2021 = Season(2021, 'kc')
+    season_2021.set_points()
+    season_2021.verify_ian_didnt_typo()
+    
     #1966 season
     season_1966 = Season(1966, 'gb', ['kc', 'gb'], ['dal', 'buf'])
     season_1966.set_record('dal', 10)
@@ -178,8 +222,8 @@ def main():
     season_1966.set_record('sd', 7)
     season_1966.set_record('oak', 8)
     season_1966.set_record('den', 4)
-    scores_1966 = season_1966.get_points()
-    print(scores_1966)
+    season_1966.set_points()
+    season_1966.verify_ian_didnt_typo()
 
 if __name__ == "__main__":
     main()
