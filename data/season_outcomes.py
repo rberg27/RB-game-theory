@@ -1,43 +1,47 @@
 from typing import List
 
-teams = ["ari",
-        "atl",
-        "bal",
-        "bos",
-        "buf",
-        "car",
-        "chi",
-        "cin",
-        "cle",
-        "dal",
-        "den",
-        "det",
-        "gb",
-        "hou",
-        "ind",
-        "jac",
-        "kc",
-        "lv",
-        "la cha",
-        "la ram",
-        "mia",
-        "min",
-        "ne",
-        "no",
-        "ny gia",
-        "ny jet",
-        "oak",
-        "phi",
-        "pho",
-        "pit",
-        "sd",
-        "sf",
-        "sea",
-        "sl car",
-        "sl ram",
-        "tb",
-        "ten",
-        "was"
+abv = { "Arizona Cardinals": "car",
+        "Atlanta Falcons": "fal",
+        "Baltimore Colts": "col",
+        "Baltimore Ravens": "rav",
+        "Boston Patriots": "pat",
+        "Buffalo Bills": "bil",
+        "Carolina Panthers": "pan",
+        "Chicago Bears":"bea",
+        "Cincinatti Bengals":"ben",
+        "Cleveland Browns":"brown",
+        "Dallas Cowboys":"cow",
+        "Denver Broncos":"bronc",
+        "Detroit Lions":"lio",
+        "Green Bay Packers":"pac",
+        "Houston Oilers":"oil",
+        "Houston Texans":"tex",
+        "Indianapolis Colts":"col",
+        "Jacksonville Jaguars":"jag",
+        "Kansas City Chiefs":"chi",
+        "Las Vegas Raiders":"rai",
+        "Los Angeles Chargers": "cha",
+        "Los Angeles Rams":"ram",
+        "Miami Dolphins":"dol",
+        "Minnesota Vikings":"vik",
+        "New England Patriots": "pat",
+        "New Orleans Saints": "sai",
+        "New York Giants": 'gia',
+        "New York Jets": 'jet',
+        "Oakland Raiders": 'rai',
+        "Philedelphia Eagles": 'eag',
+        "Phoenix Cardinals": 'car',
+        "Pittsburgh Steelers": 'ste,
+        "San Diego Chargers": 'cha',
+        "San Francisco 49ers": '49',
+        "Seattle Seahawks": 'sea',
+        "St. Louis Cardinals": 'car',
+        "St. Louis Rams": 'ram',
+        "Tampa Bay Buccaneers": 'buc',
+        "Tennessee Titans": 'tit',
+        "Washington Redskins": 'red',
+        "Washington Football Team": 'foo',
+        "Washington Commanders": 'com'
         ]
 SUPERBOWL_WIN = 5
 CONFERENCE_WIN = 4
@@ -46,17 +50,19 @@ WILDCARD_WIN = 2
 FIRSTROUND_LOSS = 1
 WIN = .2
 class Season():
-    def __init__(self, year: int, superbowl_winner: str, conference_champions: List[str],  firstround_losers: List[str], division_winners: List[str] = [], wildcard_winners: List[str] = []):
+    def __init__(self, year: int, teams: List[str], superbowl_winner: str, conference_champions: List[str],  firstround_losers: List[str], division_winners: List[str] = [], wildcard_winners: List[str] = []):
         self.year = year
-        self.superbowl_winner = superbowl_winner
-        self.conference_champions = conference_champions
-        self.division_winners = division_winners
-        self.wildcard_winners = wildcard_winners
-        self.firstround_losers = firstround_losers
+        self.teams = teams
+        self.abv_to_team = {abv[team]:team for team in self.teams}
+        self.superbowl_winner = self.abv_to_team[superbowl_winner]
+        self.conference_champions = [self.abv_to_team[abv] for abv in conference_champions]
+        self.division_winners =  [self.abv_to_team[abv] for abv in division_winners]
+        self.wildcard_winners =  [self.abv_to_team[abv] for abv in wildcard_winners]
+        self.firstround_losers =  [self.abv_to_team[abv] for abv in firstround_losers]
         self.scores = {team:0 for team in teams}
 
-    def set_record(self, team: str, wins: int):
-        self.scores[team] = wins
+    def set_record(self, abv: str, wins: int):
+        self.scores[self.abv_to_team[abv]] = wins
             
     def set_points(self):
         for team in teams:
@@ -77,14 +83,14 @@ class Season():
     
     def verify_ian_didnt_typo(self):
         for team, value in self.scores.items():
-            if (team not in teams):
+            if (team not in self.teams):
                 print(f'{team} not a valid team dipshit')
             if (value == 0):
                 print(f'{team} has 0 points') 
 
 def main():
     #2024 season
-    season_2024 = Season(2024, 'phi', ['phi', 'kc'], ['pit', 'den', 'la cha', 'tb', 'min', 'gb'], division_winners=['phi','buf', 'kc', 'was'], wildcard_winners=['hou', 'bal', 'buf', 'phi', 'was', 'la ram', 'kc', 'det'])
+    season_2024 = Season(2024, 'eag', ['eag', 'kc'], ['pit', 'den', 'la cha', 'tb', 'min', 'gb'], division_winners=['phi','buf', 'kc', 'was'], wildcard_winners=['hou', 'bal', 'buf', 'phi', 'was', 'la ram', 'kc', 'det'])
     season_2024.set_record('phi', 14)
     season_2024.set_record('was', 12)
     season_2024.set_record('dal', 7)
@@ -269,6 +275,7 @@ def main():
 
     #2019 season -> Oakland Raiders
     season_2019 = Season(2019, 'kc', ['kc', 'sf'], ['phi', 'no', 'ne', 'buf'], divisional_winners=['kc','tn','gb','sf'], wildcard_winners=['sea', 'gb', 'min', 'sf', 'ten', 'bal', 'hou', 'kc'])
+    season_2019.set_record('bal'
     season_2019.set_points()
     season_2019.verify_ian_didnt_typo()
     
