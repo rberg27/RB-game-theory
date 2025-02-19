@@ -8,7 +8,7 @@ abv = { "Arizona Cardinals": "car",
         "Buffalo Bills": "bil",
         "Carolina Panthers": "pan",
         "Chicago Bears":"bea",
-        "Cincinatti Bengals":"ben",
+        "Cincinnati Bengals":"ben",
         "Cleveland Browns":"brown",
         "Dallas Cowboys":"cow",
         "Denver Broncos":"bronc",
@@ -29,9 +29,9 @@ abv = { "Arizona Cardinals": "car",
         "New York Giants": 'gia',
         "New York Jets": 'jet',
         "Oakland Raiders": 'rai',
-        "Philedelphia Eagles": 'eag',
+        "Philadelphia Eagles": 'eag',
         "Phoenix Cardinals": 'car',
-        "Pittsburgh Steelers": 'ste,
+        "Pittsburgh Steelers": 'ste',
         "San Diego Chargers": 'cha',
         "San Francisco 49ers": '49',
         "Seattle Seahawks": 'sea',
@@ -42,7 +42,7 @@ abv = { "Arizona Cardinals": "car",
         "Washington Redskins": 'red',
         "Washington Football Team": 'foo',
         "Washington Commanders": 'com'
-        ]
+}
 
 nfl_teams_2022_2024 = [
     "Arizona Cardinals", "Atlanta Falcons", "Baltimore Ravens", "Buffalo Bills",
@@ -119,7 +119,7 @@ class Season():
         self.scores[self.abv_to_team[abv]] = wins
             
     def set_points(self):
-        for team in teams:
+        for team in self.teams:
             self.scores[team] = round(self.scores[team] * WIN, 1)
             if (team == self.superbowl_winner):
                 self.scores[team] += SUPERBOWL_WIN
@@ -194,7 +194,7 @@ def main():
     season_2023.set_record('sea', 9)
     season_2023.set_record('car', 4)
     season_2023.set_record('49', 12)
-    season_2023.set_record('lion', 12)
+    season_2023.set_record('lio', 12)
     season_2023.set_record('vik', 7)
     season_2023.set_record('pac', 9)
     season_2023.set_record('bea', 7)
@@ -254,7 +254,7 @@ def main():
     season_2022.verify_ian_didnt_typo()
 
     #2021 season
-    season_2021 = Season(2021, nfl_teams_2020_2021, 'ram', ['ram', 'ben'], ['cow', 'car', 'eag', 'rai', 'pat', 'ste'], divisional_winners=['ram', '49', 'ben', 'chi'], wildcard_winners=['49', 'pac', 'ram', 'buc', 'ben', 'tit', 'bil', 'chi'])
+    season_2021 = Season(2021, nfl_teams_2020_2021, 'ram', ['ram', 'ben'], ['cow', 'car', 'eag', 'rai', 'pat', 'ste'], division_winners=['ram', '49', 'ben', 'chi'], wildcard_winners=['49', 'pac', 'ram', 'buc', 'ben', 'tit', 'bil', 'chi'])
     season_2021.set_record('pac', 13)
     season_2021.set_record('buc', 13)
     season_2021.set_record('cow', 12) #first round exit
@@ -291,7 +291,7 @@ def main():
     season_2021.verify_ian_didnt_typo()
 
     #2020 season
-    season_2020 = Season(2020, nfl_teams_2020_2021, 'buc', ['chi', 'buc'], ['tit', 'col', 'ste', 'foo', 'bea', 'sea'], divisional_winners=['chi', 'bil', 'buc', 'pac'], wildcard_winners=['rav', 'bil', 'brown', 'chi', 'buc', 'sai', 'ram', 'pac'])
+    season_2020 = Season(2020, nfl_teams_2020_2021, 'buc', ['chi', 'buc'], ['tit', 'col', 'ste', 'foo', 'bea', 'sea'], division_winners=['chi', 'bil', 'buc', 'pac'], wildcard_winners=['rav', 'bil', 'brown', 'chi', 'buc', 'sai', 'ram', 'pac'])
     season_2020.set_record('chi', 14)
     season_2020.set_record('bil',13)
     season_2020.set_record('pac', 13)
@@ -314,7 +314,7 @@ def main():
     season_2020.set_record('foo', 7)
     season_2020.set_record('cow', 6)
     season_2020.set_record('gia', 6)
-    seaons_2020.set_record('49', 60)
+    season_2020.set_record('49', 60)
     season_2020.set_record('pan', 5)
     season_2020.set_record('bronc', 5)
     season_2020.set_record('lio', 5)
@@ -328,7 +328,7 @@ def main():
     season_2020.verify_ian_didnt_typo()
 
     #2019 season
-    season_2019 = Season(2019, nfl_teams_2018_2019, 'chi', ['chi', '49'], ['eag', 'sai', 'pat', 'bil'], divisional_winners=['chi','tit','pac','49'], wildcard_winners=['sea', 'pac', 'vik', '49', 'tit', 'rav', 'tex', 'chi'])
+    season_2019 = Season(2019, nfl_teams_2018_2019, 'chi', ['chi', '49'], ['eag', 'sai', 'pat', 'bil'], division_winners=['chi','tit','pac','49'], wildcard_winners=['sea', 'pac', 'vik', '49', 'tit', 'rav', 'tex', 'chi'])
     season_2019.set_record('rav', 14)
     season_2019.set_points()
     season_2019.verify_ian_didnt_typo()
