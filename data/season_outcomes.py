@@ -65,7 +65,7 @@ nfl_teams_2020_2021 = [
     "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Football Team"
 ]
 
-nfl_teams_2018_2019 = [
+nfl_teams_2017_2019 = [
     "Buffalo Bills", "Miami Dolphins", "New England Patriots", "New York Jets",  # AFC East
     "Baltimore Ravens", "Cincinnati Bengals", "Cleveland Browns", "Pittsburgh Steelers",  # AFC North
     "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans",  # AFC South
@@ -76,7 +76,7 @@ nfl_teams_2018_2019 = [
     "Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"  # NFC West
 ]
 
-nfl_teams_2017 = [
+nfl_teams_2016 = [
     "Buffalo Bills", "Miami Dolphins", "New England Patriots", "New York Jets",  # AFC East
     "Baltimore Ravens", "Cincinnati Bengals", "Cleveland Browns", "Pittsburgh Steelers",  # AFC North
     "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans",  # AFC South
@@ -85,6 +85,17 @@ nfl_teams_2017 = [
     "Chicago Bears", "Detroit Lions", "Green Bay Packers", "Minnesota Vikings",  # NFC North
     "Atlanta Falcons", "Carolina Panthers", "New Orleans Saints", "Tampa Bay Buccaneers",  # NFC South
     "Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"  # NFC West
+]
+
+nfl_teams_2002_2015 = [
+    "Arizona Cardinals", "Atlanta Falcons", "Baltimore Ravens", "Buffalo Bills",
+    "Carolina Panthers", "Chicago Bears", "Cincinnati Bengals", "Cleveland Browns",
+    "Dallas Cowboys", "Denver Broncos", "Detroit Lions", "Green Bay Packers",
+    "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Kansas City Chiefs",
+    "Miami Dolphins", "Minnesota Vikings", "New England Patriots", "New Orleans Saints",
+    "New York Giants", "New York Jets", "Oakland Raiders", "Philadelphia Eagles",
+    "Pittsburgh Steelers", "San Diego Chargers", "San Francisco 49ers", "Seattle Seahawks",
+    "St. Louis Rams", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Redskins"
 ]
 
 nfl_teams_1966 = [
@@ -330,7 +341,7 @@ def main():
     season_2020.verify_ian_didnt_typo()
 
     #2019 season
-    season_2019 = Season(2019, nfl_teams_2018_2019, 'chi', ['chi', '49'], ['eag', 'sai', 'pat', 'bil'], division_winners=['chi','tit','pac','49'], wildcard_winners=['sea', 'pac', 'vik', '49', 'tit', 'rav', 'tex', 'chi'])
+    season_2019 = Season(2019, nfl_teams_2017_2019, 'chi', ['chi', '49'], ['eag', 'sai', 'pat', 'bil'], division_winners=['chi','tit','pac','49'], wildcard_winners=['sea', 'pac', 'vik', '49', 'tit', 'rav', 'tex', 'chi'])
     season_2019.set_record('rav', 14)
     season_2019.set_record('pac', 13)
     season_2019.set_record('sai', 13)
@@ -368,7 +379,7 @@ def main():
 
 
     #2018 season
-    season_2018 = Season(2018, nfl_teams_2018_2019, "pat", ["pat", "ram"], ["rav", "tex", "sea", "bea"], division_winners=["pat", "chi", "ram", "sai"], wildcard_winners=["cha", "pat", "col", "chi", "cow", "ram", "eag", "sai"])
+    season_2018 = Season(2018, nfl_teams_2017_2019, "pat", ["pat", "ram"], ["rav", "tex", "sea", "bea"], division_winners=["pat", "chi", "ram", "sai"], wildcard_winners=["cha", "pat", "col", "chi", "cow", "ram", "eag", "sai"])
     season_2018.set_record('ram', 13)
     season_2018.set_record('sai', 13)
     season_2018.set_record('bea', 12) #??
@@ -405,7 +416,7 @@ def main():
     season_2018.verify_ian_didnt_typo()
 
     #2017 season
-    season_2017 = Season(1977, nfl_teams_2017, 'eag', ['eag', 'pat'], ['pan', 'ram', 'bil', 'chi'], division_winners=['vik','eag','jag','pat'], wildcard_winners=['sai','vik','fal','eag','jag','ste','tit','pat'])
+    season_2017 = Season(1977, nfl_teams_2017_2019, 'eag', ['eag', 'pat'], ['pan', 'ram', 'bil', 'chi'], division_winners=['vik','eag','jag','pat'], wildcard_winners=['sai','vik','fal','eag','jag','ste','tit','pat'])
     season_2017.set_record('vik', 13)
     season_2017.set_record('pat', 13)
     season_2017.set_record('eag', 13)
@@ -440,6 +451,116 @@ def main():
     season_2017.set_record('brown', 0) #LMAOOOOOOO
     season_2017.set_points()
     season_2017.verify_ian_didnt_typo()
+
+    #2016 season
+    season_2016 = Season(2016, nfl_teams_2016, 'pat', ['fal', 'pat'], ['dol', 'rai', 'gia', 'lio'], division_winners=['ste', 'pat', 'pac', 'fal'], wildcard_winners=['pit', 'chi', 'tex', 'pat', 'pac', 'cow', 'sea', 'fal'])
+    season_2016.set_record('pat', 14)
+    season_2016.set_record('cow', 13) #hahahahahah
+    season_2016.set_record('chi', 12)
+    season_2016.set_record('rai', 12)
+    season_2016.set_record('fal', 11)
+    season_2016.set_record('gia', 11)
+    season_2016.set_record('ste', 11)
+    season_2016.set_record('sea', 10)
+    season_2016.set_record('pac', 10)
+    season_2016.set_record('dol', 10)
+    season_2016.set_record('bronc', 9)
+    season_2016.set_record('lio', 9)
+    season_2016.set_record('tex', 9)
+    season_2016.set_record('buc', 9)
+    season_2016.set_record('tit', 9)
+    season_2016.set_record('red', 8)
+    season_2016.set_record('rav', 8)
+    season_2016.set_record('col', 8)
+    season_2016.set_record('vik', 8)
+    season_2016.set_record('car', 7)
+    season_2016.set_record('bil', 7)
+    season_2016.set_record('sai', 7)
+    season_2016.set_record('eag', 7)
+    season_2016.set_record('ben', 6)
+    season_2016.set_record('pan', 6)
+    season_2016.set_record('cha', 5)
+    season_2016.set_record('jet', 5)
+    season_2016.set_record('ram', 4)
+    season_2016.set_record('bea', 3)
+    season_2016.set_record('jag', 3)
+    season_2016.set_record('49', 2)
+    season_2016.set_record('brown' 1)
+    season_2016.set_points()
+    season_2016.verify_ian_didnt_typo()
+
+    #2015 season
+    season_2015 = Season(2015, nfl_teams_2002_2015, 'bronc', ['pan', 'bronc'], ['red', 'min', 'tex', 'ben'], division_winners=['car', 'pan', 'pat', 'bronc'], wildcard_winners=['pac', 'car', 'sea', 'pan', 'chi', 'pat', 'ste', 'bronc'])
+    season_2015.set_record('pan', 15)
+    season_2015.set_record('car', 13)
+    season_2015.set_record('ben', 12)
+    season_2015.set_record('bronc', 12)
+    season_2015.set_record('pat', 12)
+    season_2015.set_record('chi', 11)
+    season_2015.set_record('vik', 11)
+    season_2015.set_record('pac', 10)
+    season_2015.set_record('jet', 10)
+    season_2015.set_record('ste', 10)
+    season_2015.set_record('sea', 10)
+    season_2015.set_record('tex', 9)
+    season_2015.set_record('red', 9)
+    season_2015.set_record('fal', 8)
+    season_2015.set_record('bil', 8)
+    season_2015.set_record('lio', 7)
+    season_2015.set_record('rai', 7)
+    season_2015.set_record('ram', 7)
+    season_2015.set_record('sai', 7)
+    season_2015.set_record('eag', 7)
+    season_2015.set_record('bea', 6)
+    season_2015.set_record('dol', 6)
+    season_2015.set_record('gia', 6)
+    season_2015.set_record('buc', 6)
+    season_2015.set_record('rav', 5)
+    season_2015.set_record('jag', 5)
+    season_2015.set_record('49', 5)
+    season_2015.set_record('cow', 4)
+    season_2015.set_record('cha', 4)
+    season_2015.set_record('brown', 3)
+    season_2015.set_record('tit', 3)
+    season_2015.set_points()
+    season_2015.verify_ian_didnt_typo()
+
+    #2014 season
+    season_2014 = Season(2014, nfl_teams_2002_2015, 'pat', ['sea', 'pat'], ['ben', 'ste', 'lio', 'car'], division_winners=['col', 'pat', 'pac', 'sea'], wildcard_winners=['col', 'den', 'rav', 'pat', 'cow', 'pac', 'pan', 'sea'])
+    season_2014.set_record('cow', 12)
+    season_2014.set_record('bronc', 12)
+    season_2014.set_record('pac', 12)
+    season_2014.set_record('pat', 12)
+    season_2014.set_record('sea', 12)
+    season_2014.set_record('car', 11)
+    season_2014.set_record('lio', 11)
+    season_2014.set_record('col', 11)
+    season_2014.set_record('ste', 11)
+    season_2014.set_record('ben', 10)
+    season_2014.set_record('rav', 10)
+    season_2014.set_record('eag', 10)
+    season_2014.set_record('bil', 9)
+    season_2014.set_record('tex', 9)
+    season_2014.set_record('chi', 9)
+    season_2014.set_record('cha', 9)
+    season_2014.set_record('dol', 8)
+    season_2014.set_record('49', 8)
+    season_2014.set_record('pan', 7)
+    season_2014.set_record('brown', 7)
+    season_2014.set_record('vik', 7)
+    season_2014.set_record('sai', 7)
+    season_2014.set_record('fal', 6)
+    season_2014.set_record('ram', 6)
+    season_2014.set_record('gia', 6)
+    season_2014.set_record('bea', 5)
+    season_2014.set_record('jet', 4)
+    season_2014.set_record('red', 4)
+    season_2014.set_record('jag', 3)
+    season_2014.set_record('rai', 3)
+    season_2014.set_record('buc', 2)
+    season_2014.set_record('tit', 2)
+    season_2014.set_points()
+    season_2014.verify_ian_didnt_typo()
     
     #1966 season
     season_1966 = Season(1966, nfl_teams_1966, 'pac', ['chi', 'pac'], ['cow', 'bil'])
