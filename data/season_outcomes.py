@@ -149,8 +149,6 @@ class Season():
     def verify_ian_didnt_typo(self):
         print(f'Verifying {self.year}')
         for team, value in self.scores.items():
-            if (team not in self.teams):
-                print(f'{team} not a valid team dipshit')
             if (value == 0):
                 print(f'{team} has 0 points')
         print() 
