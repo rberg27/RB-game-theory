@@ -483,7 +483,7 @@ def main():
     season_2016.set_record('bea', 3)
     season_2016.set_record('jag', 3)
     season_2016.set_record('49', 2)
-    season_2016.set_record('brown' 1)
+    season_2016.set_record('brown', 1)
     season_2016.set_points()
     season_2016.verify_ian_didnt_typo()
 
