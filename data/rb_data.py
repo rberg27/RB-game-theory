@@ -3,6 +3,7 @@ import string
 import requests
 import pandas as pd
 from tqdm import tqdm
+from io import StringIO
 from bs4 import BeautifulSoup
 
 
@@ -67,50 +68,52 @@ def combine_levels(col_tuple):
     # Filter out any empty strings that might result from missing values in the MultiIndex
     return '_'.join(filter(None, [str(x).strip() for x in col_tuple if x and 'Unnamed' not in str(x)]))
 
-def get_player_data(url):
+def get_player_data(url, name):
         # Fetch the page
     response = requests.get(url, headers=HEADERS)
     if response.status_code != 200:
-        raise Exception(f"Failed to fetch page: {response.status_code}")
-
+        return pd.DataFrame()
     # Parse the HTML
     soup = BeautifulSoup(response.text, "html.parser")
 
     # Find the table with id "rushing_and_receiving"
     table = soup.find("table", id="rushing_and_receiving")
     if table is None:
-        raise Exception("Table with id 'rushing_and_receiving' not found!")
+        return pd.DataFrame()
 
     # Option 1: Use pandas to read the table directly from the HTML snippet.
     # First, convert the table to a string and then read it with pandas.
     table_str = str(table)
-    dfs = pd.read_html(table_str)
+    dfs = pd.read_html(StringIO(table_str))
     if len(dfs) > 0:
         df = dfs[0]
         df_filtered = df[df[( 'Unnamed: 3_level_0',     'Lg')].str.contains("NFL", case=False, na=False)]
         df_filtered.columns = [combine_levels(col) for col in df.columns.values]
+        df_filtered['Name'] = name
         return df_filtered
     else:
-        print("No table could be parsed.")
+        return pd.DataFrame()
 
 
 def main():
-    urls = [f"https://www.pro-football-reference.com/players/{letter}/" for letter in string.ascii_uppercase]
-    players = pd.DataFrame(columns=['name', 'position', 'years', 'link'])
-    for url in tqdm(urls):
-        time.sleep(1)
-        players = pd.concat([players, get_players(url)], ignore_index=True)
-    players.to_csv("players.csv", index=False) 
+    # urls = [f"https://www.pro-football-reference.com/players/{letter}/" for letter in string.ascii_uppercase]
+    # players = pd.DataFrame(columns=['name', 'position', 'years', 'link'])
+    # for url in tqdm(urls):
+    #     time.sleep(30)
+    #     players = pd.concat([players, get_players(url)], ignore_index=True)
+    # players.to_csv("players.csv", index=False) 
+    pd.options.mode.chained_assignment = None 
+    players = pd.read_csv("players.csv")
     player_data = pd.DataFrame(columns = [
-                                "Season", "Age", "Team", "Lg", "Pos", "G", "GS", "Rushing_Att", 
+                                "Name", "Season", "Age", "Team", "Lg", "Pos", "G", "GS", "Rushing_Att", 
                                 "Rushing_Yds", "Rushing_TD", "Receiving_Lng", "Receiving_R/G", 
                                 "Receiving_Y/G", "Scrimmage_Touch", "Scrimmage_Y/Tch", 
                                 "Scrimmage_YScm", "Scrimmage_RRTD", "Fmb", "AV", "Awards"
                                 ])
     for _, player in tqdm(players.iterrows()):
-        time.sleep(1)
-        player_data = pd.concat([player_data, get_player_data(f'https://www.pro-football-reference.com{player.link}')], ignore_index=True)
-    player_data.to_csv("players.csv", index=False) 
+        player_data = pd.concat([player_data, get_player_data(f'https://www.pro-football-reference.com{player.link}', player.iloc[0])], ignore_index=True)
+        time.sleep(12)
+    player_data.to_csv("player_data.csv", index=False) 
 
 
 
