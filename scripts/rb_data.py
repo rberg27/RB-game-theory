@@ -101,7 +101,6 @@ def get_free_agent_data(url, year):
     # Find all player names
     players= []
     if (year == "2025"):
-        print('here')
         for row in soup.select('table.table tbody tr'):
             player = {}
             columns = row.find_all('td')
