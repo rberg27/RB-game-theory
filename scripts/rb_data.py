@@ -94,13 +94,19 @@ def get_player_data(url, name):
         return df_filtered
     else:
         return pd.DataFrame()
+
+def safe_divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return 0
     
 def get_free_agent_data(url, year):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     # Find all player names
     players= []
-    if (year == "2025"):
+    if (year.strip() == "2025"):
         for row in soup.select('table.table tbody tr'):
             player = {}
             columns = row.find_all('td')
@@ -115,22 +121,23 @@ def get_free_agent_data(url, year):
             name_cell = row.find('a', {'class': 'link'})
             value_cell = row.find_all('td', {'class': 'text-center'})
             status = columns[-2].text.strip()
-            if "UFA" not in status and "RFA" not in status and "ERFA" not in status and "UDFA" not in status:
+            if "UFA" not in status and "RFA" not in status and "ERFA" not in status and "UDFA" not in status and "CLUB" not in status:
                 if name_cell:
                     player['Name'] = name_cell.get_text(strip=True)
-                    player['Signed'] = True 
+                    #player['Signed'] = True 
                 if value_cell:
-                    player['Years'] = value_cell[1].get_text(strip=True)
-                    player['Value'] = value_cell[2].get_text(strip=True)
-                    player['Total_GTD'] = value_cell[4].get_text(strip=True)
+                    #player['Years'] = value_cell[1].get_text(strip=True)
+                    #player['Value'] = value_cell[2].get_text(strip=True)
+                    #player['Total_GTD'] = value_cell[4].get_text(strip=True)
+                    player['Cap'] = safe_divide(int(value_cell[2].get_text(strip=True)[1:].replace(",", "")), int(value_cell[1].get_text(strip=True))) 
             else:
                 if name_cell:
                     player['Name'] = name_cell.get_text(strip=True)
-                    player['Years'] = 0
-                    player['Signed'] = False
-                    player['Years'] = 0
-                    player['Value'] = 0
-                    player['Total_GTD'] = 0
+                    # player['Years'] = 0
+                    # player['Signed'] = False
+                    # player['Value'] = 0
+                    # player['Total_GTD'] = 0
+                    player['Cap'] = 0
                 
             players.append(player)
         
@@ -156,6 +163,7 @@ def get_filtered_data(player_data, free_agents, year):
     final_df = pd.merge(player_data, last_season_stats, on='Name', suffixes=('', '_last_season'))
     final_df = final_df.drop(columns='Season')
     final_df = pd.merge(final_df, pd.DataFrame(free_agents), on="Name", how="left")
+    final_df = final_df.fillna(0).replace('', 0)
     return final_df
         
 
@@ -213,6 +221,7 @@ def main():
         url  = f"https://www.spotrac.com/nfl/free-agents/_/year/{args.year}/position/rb"
         free_agents = get_free_agent_data(url, args.year)
         free_agent_df = get_filtered_data(player_data, free_agents, args.year)
+
         free_agent_df.to_csv(f"./data/freeAgents{args.year}.csv", index=False) 
 
 
