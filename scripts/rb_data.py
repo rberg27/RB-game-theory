@@ -1,3 +1,4 @@
+import re
 import time
 import string
 import argparse
@@ -5,7 +6,12 @@ import requests
 import pandas as pd
 from tqdm import tqdm
 from io import StringIO
+from functools import reduce
 from bs4 import BeautifulSoup
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
 
 HEADERS={"User-Agent": "Mozilla/5.0"}
@@ -112,7 +118,19 @@ def get_free_agent_data(url, year):
             columns = row.find_all('td')
             name_cell = row.find('a', {'class': 'link'})
             if name_cell:
-                player['Name'] = name_cell.get_text(strip=True)
+                player['Name'] = name_cell.get_text(strip=True).replace(".", "")
+            if player['Name'] == 'Nyheim Miller-Hines':
+                player['Name'] = 'Nyheim Hines'
+            elif player['Name'] == 'Josh Kelley':
+                player['Name'] = 'Joshua Kelley'
+            elif player['Name'] == 'D’Ernest Johnson':
+                player['Name'] = "D'Ernest Johnson"
+            elif player['Name'] == 'JaMycal Hasty':
+                player['Name'] = "Jamycal Hasty"
+            elif player['Name'] == 'Larry Rountree III':
+                player['Name'] = 'Larry Rountree'
+            elif player['Name'] == 'Anthony McFarland':
+                player['Name'] = 'Anthony McFarland Jr'
             players.append(player)
     else:
         for row in soup.select('table.table tbody tr'):
@@ -123,7 +141,7 @@ def get_free_agent_data(url, year):
             status = columns[-2].text.strip()
             if "UFA" not in status and "RFA" not in status and "ERFA" not in status and "UDFA" not in status and "CLUB" not in status:
                 if name_cell:
-                    player['Name'] = name_cell.get_text(strip=True)
+                    player['Name'] = name_cell.get_text(strip=True).replace(".", "")
                     #player['Signed'] = True 
                 if value_cell:
                     #player['Years'] = value_cell[1].get_text(strip=True)
@@ -132,15 +150,25 @@ def get_free_agent_data(url, year):
                     player['Cap'] = safe_divide(int(value_cell[2].get_text(strip=True)[1:].replace(",", "")), int(value_cell[1].get_text(strip=True))) 
             else:
                 if name_cell:
-                    player['Name'] = name_cell.get_text(strip=True)
+                    player['Name'] = name_cell.get_text(strip=True).replace(".", "")
                     # player['Years'] = 0
                     # player['Signed'] = False
                     # player['Value'] = 0
                     # player['Total_GTD'] = 0
                     player['Cap'] = 0
-                
+            if player['Name'] == 'Nyheim Miller-Hines':
+                player['Name'] = 'Nyheim Hines'
+            elif player['Name'] == 'Josh Kelley':
+                player['Name'] = 'Joshua Kelley'
+            elif player['Name'] == 'D’Ernest Johnson':
+                player['Name'] = "D'Ernest Johnson"    
+            elif player['Name'] == 'JaMycal Hasty':
+                player['Name'] = "Jamycal Hasty"
+            elif player['Name'] == 'Larry Rountree III':
+                player['Name'] = 'Larry Rountree'
+            elif player['Name'] == 'Anthony McFarland':
+                player['Name'] = 'Anthony McFarland Jr'
             players.append(player)
-        
     return players
 
 def get_filtered_data(player_data, free_agents, year):
@@ -165,8 +193,29 @@ def get_filtered_data(player_data, free_agents, year):
     final_df = pd.merge(final_df, pd.DataFrame(free_agents), on="Name", how="left")
     final_df = final_df.fillna(0).replace('', 0)
     return final_df
-        
 
+def model(train_data, test_data,  columns, model_name, standardize=True):
+    d = train_data.copy(deep=True)
+    t = test_data.copy(deep=True)
+    y = d.iloc[:, -1]
+    d = d.iloc[:, 1:-1]
+    d = d[columns]
+    names = t.iloc[:, 0]
+    t = t.iloc[:, 1:]
+    t = t[columns]
+    if standardize:
+        s = StandardScaler()
+        d = s.fit_transform(d)
+        t = s.fit_transform(t)
+    X_train, X_test, y_train, y_test = train_test_split(d, y, test_size=0.2, random_state=42)
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    mse = mean_squared_error(y_test, y_pred)
+    predictions = model.predict(t)
+    agent_predictions = pd.DataFrame({'Names': names, f'Pred_{model_name}': predictions})
+    agent_predictions[f'Pred_{model_name}'] = agent_predictions[f'Pred_{model_name}'].apply(lambda x: max(x, 0)).astype(int)
+    return (mse, agent_predictions)
 
 def main():
     #THIS IS MEANT TO BE RUN FROM OUTSIDE OF THE SCRIPTS FOLDER from the base RB-GAME-THEORY folder
@@ -204,7 +253,7 @@ def main():
             time.sleep(30)
             players = pd.concat([players, get_players(url)], ignore_index=True)
         players.to_csv("./data/players.csv", index=False) 
-    if(args.players and args.type == "pull"):
+    elif(args.players and args.type == "pull"):
         players = pd.read_csv(args.players)
         player_data = pd.DataFrame(columns = [
                                     "Name", "Season", "Age", "Team", "Lg", "Pos", "G", "GS", "Rushing_Att", 
@@ -216,16 +265,109 @@ def main():
             player_data = pd.concat([player_data, get_player_data(f'https://www.pro-football-reference.com{player.link}', player.iloc[0])], ignore_index=True)
             time.sleep(12)
         player_data.to_csv("./data/player_data.csv", index=False)
-    if(args.data and args.year and args.type == "sum"):
+    elif(args.data and args.year and args.type == "sum"):
         player_data = pd.read_csv(args.data)
+        player_data['Name'] = player_data['Name'].str.replace('.', '')
         url  = f"https://www.spotrac.com/nfl/free-agents/_/year/{args.year}/position/rb"
         free_agents = get_free_agent_data(url, args.year)
         free_agent_df = get_filtered_data(player_data, free_agents, args.year)
-
         free_agent_df.to_csv(f"./data/freeAgents{args.year}.csv", index=False) 
 
+    elif(args.data and args.type == "model"):
+        dfs =  [pd.read_csv(f'{args.data}{year}.csv') for year in range(2011,2025)]
+        data_2025 = pd.read_csv(f'{args.data}2025.csv')
+        combined_df = pd.concat(dfs, ignore_index=True)
+        full_columns = [ 'G', 'GS', 'Rushing_Att', 'Rushing_Yds', 'Rushing_TD',
+       'Receiving_R/G', 'Receiving_Y/G', 'Fmb', 'AV', 'Awards', 'Rushing_1D',
+       'Rushing_Succ%', 'Rushing_Y/A', 'Rushing_A/G', 'Receiving_Tgt',
+       'Receiving_Rec', 'Receiving_Yds', 'Receiving_Y/R', 'Receiving_TD',
+       'Receiving_1D', 'Receiving_Succ%', 'Receiving_Ctch%', 'Receiving_Y/Tgt',
+       'Age', 'G_last_season', 'GS_last_season', 'Rushing_Att_last_season',
+       'Rushing_Yds_last_season', 'Rushing_TD_last_season', 'Receiving_Lng',
+       'Receiving_R/G_last_season', 'Receiving_Y/G_last_season',
+       'Fmb_last_season', 'AV_last_season', 'Awards_last_season',
+       'Rushing_1D_last_season', 'Rushing_Succ%_last_season', 'Rushing_Lng',
+       'Rushing_Y/A_last_season', 'Rushing_Y/G', 'Rushing_A/G_last_season',
+       'Receiving_Tgt_last_season', 'Receiving_Rec_last_season',
+       'Receiving_Yds_last_season', 'Receiving_Y/R_last_season',
+       'Receiving_TD_last_season', 'Receiving_1D_last_season',
+       'Receiving_Succ%_last_season', 'Receiving_Ctch%_last_season',
+       'Receiving_Y/Tgt_last_season']
+        
+        mse = {}
+        mse_std_full, pred_std_full = model(combined_df, data_2025, full_columns, 'std_full')
+        mse['Pred_std_full'] = mse_std_full
+        print(mse_std_full)
+        print(pred_std_full.sort_values(by='Pred_std_full', ascending=False))
 
+        mse_full, pred_full = model(combined_df, data_2025, full_columns, 'full', standardize=False)
+        mse['Pred_full'] = mse_full
+        print(mse_full)
+        print(pred_full.sort_values(by='Pred_full', ascending=False))
 
+        career_columns = [ 'G', 'GS', 'Rushing_Att', 'Rushing_Yds', 'Rushing_TD',
+       'Receiving_R/G', 'Receiving_Y/G', 'Fmb', 'AV', 'Awards', 'Rushing_1D',
+       'Rushing_Succ%', 'Rushing_Y/A', 'Rushing_A/G', 'Receiving_Tgt',
+       'Receiving_Rec', 'Receiving_Yds', 'Receiving_Y/R', 'Receiving_TD',
+       'Receiving_1D', 'Receiving_Succ%', 'Receiving_Ctch%', 'Receiving_Y/Tgt',
+       'Age']
 
+        mse_std_career, pred_std_career = model(combined_df, data_2025, career_columns, 'std_career')
+        mse['Pred_std_career'] = mse_std_career
+        print(mse_std_career)
+        print(pred_std_career.sort_values(by='Pred_std_career', ascending=False))
+
+        mse_career, pred_career = model(combined_df, data_2025, career_columns, 'career', standardize=False)
+        mse['Pred_career'] = mse_career
+        print(mse_career)
+        print(pred_career.sort_values(by='Pred_career', ascending=False))
+
+        last_columns = [
+       'Age', 'G_last_season', 'GS_last_season', 'Rushing_Att_last_season',
+       'Rushing_Yds_last_season', 'Rushing_TD_last_season', 'Receiving_Lng',
+       'Receiving_R/G_last_season', 'Receiving_Y/G_last_season',
+       'Fmb_last_season', 'AV_last_season', 'Awards_last_season',
+       'Rushing_1D_last_season', 'Rushing_Succ%_last_season', 'Rushing_Lng',
+       'Rushing_Y/A_last_season', 'Rushing_Y/G', 'Rushing_A/G_last_season',
+       'Receiving_Tgt_last_season', 'Receiving_Rec_last_season',
+       'Receiving_Yds_last_season', 'Receiving_Y/R_last_season',
+       'Receiving_TD_last_season', 'Receiving_1D_last_season',
+       'Receiving_Succ%_last_season', 'Receiving_Ctch%_last_season',
+       'Receiving_Y/Tgt_last_season']
+        
+        mse_std_last, pred_std_last = model(combined_df, data_2025, last_columns, 'std_last')
+        mse['Pred_std_last'] = mse_std_last
+        print(mse_std_last)
+        print(pred_std_last.sort_values(by='Pred_std_last', ascending=False))
+
+        mse_last, pred_last = model(combined_df, data_2025, last_columns, 'last', standardize=False)
+        mse['Pred_last'] = mse_last
+        print(mse_last)
+        print(pred_last.sort_values(by='Pred_last', ascending=False))
+
+        combo_columns = ['Rushing_Att', 'Rushing_Yds', 'Rushing_TD',
+       'Receiving_R/G', 'Receiving_Y/G', 'Fmb', 'AV', 'Awards',
+       'Age', 'G_last_season', 'GS_last_season', 'Rushing_Att_last_season',
+       'Rushing_Yds_last_season', 'Rushing_TD_last_season', 'Receiving_Lng',
+       'Receiving_R/G_last_season', 'Receiving_Y/G_last_season',
+       'Fmb_last_season']
+        
+        mse_std_combo, pred_std_combo = model(combined_df, data_2025, combo_columns, 'std_combo')
+        mse['Pred_std_combo'] = mse_std_combo
+        print(mse_std_combo)
+        print(pred_std_combo.sort_values(by='Pred_std_combo', ascending=False))
+
+        mse_combo, pred_combo = model(combined_df, data_2025, combo_columns, 'combo', standardize=False)
+        mse['Pred_combo'] = mse_combo
+        print(mse_combo)
+        print(pred_combo.sort_values(by='Pred_combo', ascending=False))
+
+        smallest_key = min(mse, key=mse.get)
+        d_list = [pred_std_full, pred_full, pred_std_career, pred_career, pred_std_last, pred_last, pred_std_combo, pred_combo]
+        df_merged = reduce(lambda left, right: pd.merge(left, right, on='Names'), d_list).sort_values(by=smallest_key, ascending=False)
+        print(f'Sorted on {smallest_key}')
+        print(df_merged)
+
+        df_merged.to_csv(f"./data/predictions.csv", index=False) 
 if __name__ == "__main__":
     main()
