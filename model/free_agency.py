@@ -42,6 +42,81 @@ def get_teams_by_year(year):
     teams_df = teams_df[teams_df['year'] == year]
     return teams_df
 
+def get_team_cap_for_year(team_name, year):
+    """
+    Returns the cap space for a specific team in a given year.
+    
+    Args:
+        team_name (str): The name of the team (e.g., "PHI")
+        year (int): The year to get cap space for
+        
+    Returns:
+        float: The cap space value for the specified team and year
+    """
+    # Dictionary to convert full team names to abbreviations
+    team_name_to_abbr = {
+        "Arizona Cardinals": "ARI",
+        "Atlanta Falcons": "ATL",
+        "Baltimore Ravens": "BAL",
+        "Buffalo Bills": "BUF",
+        "Carolina Panthers": "CAR",
+        "Chicago Bears": "CHI",
+        "Cincinnati Bengals": "CIN",
+        "Cleveland Browns": "CLE",
+        "Dallas Cowboys": "DAL",
+        "Denver Broncos": "DEN",
+        "Detroit Lions": "DET",
+        "Green Bay Packers": "GB",
+        "Houston Texans": "HOU",
+        "Indianapolis Colts": "IND",
+        "Jacksonville Jaguars": "JAX",
+        "Kansas City Chiefs": "KC",
+        "Los Angeles Chargers": "LAC",
+        "Los Angeles Rams": "LAR",
+        "Las Vegas Raiders": "LV",
+        "Miami Dolphins": "MIA",
+        "Minnesota Vikings": "MIN",
+        "New England Patriots": "NE",
+        "New Orleans Saints": "NO",
+        "New York Giants": "NYG",
+        "New York Jets": "NYJ",
+        "Oakland Raiders": "OAK",
+        "Philadelphia Eagles": "PHI",
+        "Pittsburgh Steelers": "PIT",
+        "San Diego Chargers": "SD",
+        "Seattle Seahawks": "SEA",
+        "San Francisco 49ers": "SF",
+        "St. Louis Rams": "STL",
+        "Tampa Bay Buccaneers": "TB",
+        "Tennessee Titans": "TEN",
+        "Washington Commanders": "WAS",
+        "Washington Football Team": "WAS",
+        "Washington Redskins": "WAS"
+    }
+    
+    # Get team abbreviation
+    team_abbr = team_name_to_abbr.get(team_name)
+    if not team_abbr:
+        return None
+    
+    file_path = get_file_path("./model/nfl_cap_space_2015_2025.csv")
+    cap_space_df = pd.read_csv(file_path)
+    
+    # Find the row for the specified team
+    team_row = cap_space_df[cap_space_df['Team'].str.contains(team_abbr)]
+    
+    if team_row.empty:
+        return None
+    
+    # Get the cap space for the specified year
+    if str(year) in team_row.columns:
+        cap_space = team_row[str(year)].values[0]
+        # Remove $ and commas, then convert to float
+        if isinstance(cap_space, str):
+            cap_space = float(cap_space.replace('$', '').replace(',', '').replace('"', ''))
+        return cap_space
+    else:
+        return None
 
 if __name__ == "__main__":
     # Test the free agency functions
@@ -57,7 +132,7 @@ if __name__ == "__main__":
     # Test getting teams for 2024
     teams = get_teams_by_year(test_year)
     print(f"\nTeams for {test_year}:")
-    print(teams.head() if not teams.empty else "No teams found")
+    print(teams.head())
 
     # Check if teams dataframe has the expected columns
     if not teams.empty and 'team_name' in teams.columns and 'HB1' in teams.columns:
@@ -69,3 +144,7 @@ if __name__ == "__main__":
             print("No data for Philadelphia Eagles in 2024")
     else:
         print("Teams dataframe does not have expected columns or is empty")
+        
+    # Test getting team cap for 2024
+    team_cap = get_team_cap_for_year("Philadelphia Eagles", test_year)
+    print(f"\nTeam cap for Philadelphia Eagles in {test_year}: {team_cap}")

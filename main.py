@@ -19,8 +19,16 @@ teams = free_agency.get_teams_by_year(year)
 # Calculate team need for each free agent
 need_matrix = calculate_team_needs(free_agents, teams)
 
+# Get team cap for each team
+team_caps = {}
+for team in teams['team_name']:
+    team_cap = free_agency.get_team_cap_for_year(team, year)
+    team_caps[team] = team_cap
+print(team_caps)
+
 # Visualize the results
 print(need_matrix)
+
 # Visualize the need matrix as a heatmap
 if not need_matrix.empty:
     plt.figure(figsize=(16, 12))
