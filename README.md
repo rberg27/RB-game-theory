@@ -34,6 +34,6 @@ Folders
           - players: file location for player names
           - data: file location for player data
           - year: year of free agency
-        - some example of runs would be python scripts\rb_data.py --type pull --
+        - some example of runs would be python scripts\rb_data.py --type name || python scripts\rb_data.py --type model --data data\player_data.csv
       - season_outcomes.py
         - Initial attempt for a independant variable in our models, no longer useful as wins were not indicative of running back performance
