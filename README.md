@@ -1,9 +1,18 @@
-THE ALLIES 
+Folders
+- classes
 
+- runningback_value
+  - this folder holds the code used to predict the value of a running back. Using historical data, a regression model was trained to predict the value of a contract for running backs
+  - data files
+      - freeAgents...csv
+          - data for free agent running back contracts since 2011
+      - nfl_cap_space_2015_2025.csv
+          - data for cap space of each team since 2015
+        - player_data.csv
+          - season statistics for running backs since ~1940
+        
+- model
 
-Modeling the market value of the fastest men in tights in the NFL
+- output
 
-
-Agendas and Meeting Minutes: https://docs.google.com/document/d/1i9eiTMSmL2gWtDLmJCrsfPgL3PiUZvX5bZsecNNyNeM/edit?usp=sharing
-
-Google Drive: https://drive.google.com/drive/folders/1YYHY4Qsocrmu796AuLI7cVI58fP_FDHc?usp=drive_link
+- scripts
