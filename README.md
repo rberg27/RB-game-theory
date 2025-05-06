@@ -23,3 +23,15 @@ Folders
   - this folder holds the scripts used to generate data files and end results
   - script files
       - rb_data.py
+        - File used to create free agent data files as well as run the regression model to predict running back values
+        - meant to be run in top level dir for pathing reason, especially when sum is present
+        - Run options:
+          - type: command specifying what action the script will take
+            - name: gets all running back names -> players.csv,
+            - pull: get data for each year given running back names -> player_data.csv
+            - sum: sum data before a given year for free agency purposes
+          - players: file location for player names
+          - data: file location for player data
+          - year: year of free agency
+      - season_outcomes.py
+        - Initial attempt for a independant variable in our models, no longer useful as wins were not indicative of running back performance
