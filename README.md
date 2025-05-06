@@ -29,9 +29,11 @@ Folders
           - type: command specifying what action the script will take
             - name: gets all running back names -> players.csv,
             - pull: get data for each year given running back names -> player_data.csv
-            - sum: sum data before a given year for free agency purposes
+            - sum: get free agent data for a specific year
+            - model: run the model to predict free agent running back contract values for 2025
           - players: file location for player names
           - data: file location for player data
           - year: year of free agency
+        - some example of runs would be python scripts\rb_data.py --type pull --
       - season_outcomes.py
         - Initial attempt for a independant variable in our models, no longer useful as wins were not indicative of running back performance
