@@ -1,6 +1,14 @@
-Folders
-- classes
+How to run this project:
 
+1. Edit main.py with the year that you want to analyze
+2. Run main.py
+
+The output will share the forecast for which player will go for which amount. The output folder will include a heatmap of team needs for certain players.
+
+
+
+
+Folders
 - data
   - this folder holds data generated from scripts run for this project
   - data files
@@ -14,10 +22,6 @@ Folders
           - list of players and links to their data pages since ~1940
       - predictions.csv
           - output of the running back value regression model. There are multiple columns but it is sorted by pred_std_combo column to rank which running backs have the highest value contracts
-        
-- model
-
-- output
 
 - scripts
   - this folder holds the scripts used to generate data files and end results
